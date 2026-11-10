@@ -1,0 +1,233 @@
+.card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  --glare: 0;
+  --lift: 0px;
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transform: perspective(900px) translateY(var(--lift)) rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s;
+  /* "backwards": só vale durante a entrada; depois o hover/tilt voltam a funcionar */
+  animation: pop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  animation-delay: calc(min(var(--i), 14) * 35ms);
+  will-change: transform;
+}
+
+.card[data-tilting='true'] {
+  --lift: -8px;
+  transition: transform 0.08s linear, box-shadow 0.3s;
+  box-shadow: 0 22px 40px -10px color-mix(in srgb, var(--c1) 70%, transparent);
+}
+
+/* Faixa colorida do topo */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 130px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.4), transparent 55%),
+    linear-gradient(135deg, var(--c1), var(--c2));
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: perspective(900px) translateY(40px) rotateX(-35deg) scale(0.9);
+  }
+}
+
+/* Brilho que acompanha o mouse */
+.card__glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.55),
+    transparent 55%
+  );
+  mix-blend-mode: soft-light;
+  opacity: var(--glare);
+  transition: opacity 0.3s;
+}
+
+.card__actions {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.35rem;
+  z-index: 2;
+  transform: translateZ(50px);
+}
+
+.card__icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255, 255, 255, 0.88);
+  color: #333;
+  font-size: 1rem;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.card__icon-btn:hover {
+  transform: scale(1.18) rotate(-8deg);
+}
+
+.card__icon-btn.is-on {
+  background: #ffd23f;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.card__body {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  padding: 0.8rem 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  text-align: center;
+  transform-style: preserve-3d;
+  border-radius: var(--radius);
+}
+
+.card__id {
+  align-self: flex-start;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  transform: translateZ(30px);
+}
+
+/* O Pokémon "salta" para fora do card */
+.card__img {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  margin-top: -0.3rem;
+  filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.35));
+  transform: translateZ(60px);
+  transition: transform 0.3s;
+}
+
+.card:hover .card__img {
+  transform: translateZ(95px) scale(1.1);
+}
+
+.card__name {
+  font-size: 1.15rem;
+  transform: translateZ(35px);
+}
+
+.card__types {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  transform: translateZ(25px);
+}
+
+.card__stats {
+  list-style: none;
+  padding: 0;
+  margin: 0.3rem 0 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem 0.6rem;
+  font-size: 0.78rem;
+  transform: translateZ(12px);
+}
+
+.card__stats li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+  background: var(--surface-2);
+  padding: 0.2rem 0.45rem;
+  border-radius: 8px;
+  color: var(--text-muted);
+}
+
+.card__stats strong {
+  color: var(--text);
+}
+
+.pokemon-img-fallback.card__img {
+  width: 110px;
+  height: 110px;
+}
+
+.card__body:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .card__img {
+    width: 100px;
+    height: 100px;
+  }
+  .card__stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Lendários / míticos ---------- */
+.card--legendary {
+  border-color: #ffd23f;
+  box-shadow:
+    0 0 0 2px rgba(255, 210, 63, 0.6),
+    0 12px 30px -8px rgba(255, 190, 0, 0.55);
+}
+
+/* Moldura dourada com brilho que percorre a borda */
+.card--legendary::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: calc(var(--radius) + 3px);
+  padding: 3px;
+  background: linear-gradient(115deg, #ffd23f, #fff3b0, #ff9f1c, #fff3b0, #ffd23f);
+  background-size: 300% 100%;
+  animation: goldBorder 4s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+  transform: translateZ(2px);
+}
+
+@keyframes goldBorder {
+  to {
+    background-position: -300% 0;
+  }
+}
+
+.card__legend {
+  position: absolute;
+  z-index: 2;
+  top: 2.4rem;
+  left: 0.7rem;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #4a3500;
+  background: linear-gradient(120deg, #ffe27a, #ffb703);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: translateZ(55px);
+}

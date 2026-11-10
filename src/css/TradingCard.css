@@ -1,0 +1,130 @@
+.tcard {
+  width: min(320px, 78vw);
+  aspect-ratio: 63 / 88;
+  padding: 3.5%;
+  background: linear-gradient(145deg, #f7e27a, #c9972b 45%, #f7e27a 70%, #b88416);
+  color: #1c2233;
+  user-select: none;
+}
+
+.tcard__frame {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.6rem 0.65rem;
+  border-radius: 10px;
+  background: linear-gradient(160deg, var(--c1), var(--c2));
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.55), inset 0 0 24px rgba(0, 0, 0, 0.25);
+}
+
+.tcard__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 0.5rem;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+
+.tcard__head small {
+  display: block;
+  font-size: 0.62rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tcard__head h3 {
+  font-size: 1.25rem;
+  line-height: 1.1;
+}
+
+.tcard__hp {
+  font-weight: 800;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.tcard__hp small {
+  display: inline;
+  font-size: 0.6rem;
+}
+
+.tcard__art {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.15) 60%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.12) 0 8px, transparent 8px 16px);
+  border: 3px solid #e9cf6b;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.tcard__img {
+  height: 92%;
+  width: auto;
+  max-width: 92%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 5px rgba(0, 0, 0, 0.35));
+}
+
+.pokemon-img-fallback.tcard__img {
+  height: 70%;
+  font-size: 1.2rem;
+}
+
+.tcard__types {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.tcard__moves {
+  list-style: none;
+  margin: 0;
+  padding: 0.45rem 0.55rem;
+  display: grid;
+  gap: 0.28rem;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 8px;
+  font-size: 0.7rem;
+}
+
+.tcard__moves li {
+  display: grid;
+  grid-template-columns: 7.5em 1fr 2.2em;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tcard__moves strong {
+  text-align: right;
+}
+
+.tcard__bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.tcard__bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--c1), var(--c2));
+  border-radius: 999px;
+}
+
+.tcard__foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: #fff;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}

@@ -1,0 +1,76 @@
+.herocard {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 3.2rem 0.5rem 2.2rem;
+}
+
+.herocard__tilt {
+  /* a altura disponível manda: a carta nunca passa do painel */
+  height: min(100%, 380px);
+}
+
+.herocard .tilt-stage {
+  height: 100%;
+}
+
+.herocard__img {
+  display: block;
+  height: 100%;
+  max-height: 380px;
+  width: auto;
+  aspect-ratio: 63 / 88;
+  object-fit: cover;
+  user-select: none;
+}
+
+/* Carta gerada (320x447 px): `zoom` reduz também o espaço ocupado no layout */
+.herocard__generated {
+  zoom: 0.8;
+}
+
+.herocard__nav {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 0.8rem;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.herocard__nav:hover {
+  transform: scale(1.12);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.herocard__meta {
+  position: absolute;
+  left: 50%;
+  bottom: 0.7rem;
+  transform: translateX(-50%);
+  max-width: 80%;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.herocard__loading {
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}

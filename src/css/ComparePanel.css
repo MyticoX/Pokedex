@@ -1,0 +1,144 @@
+.compare-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: min(760px, calc(100% - 1.5rem));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  background: var(--surface);
+  border: 2px solid var(--brand);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.compare-bar__title {
+  font-weight: 800;
+}
+
+.compare-bar__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--surface-2);
+  border-radius: 999px;
+  padding: 0.2rem 0.3rem 0.2rem 0.8rem;
+  font-weight: 600;
+}
+
+.compare-bar__chip button {
+  border: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.compare-bar__hint {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.compare-bar .btn:last-child {
+  margin-left: auto;
+}
+
+.compare {
+  padding: 1.5rem;
+}
+
+.compare h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.compare__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.compare__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--c1), transparent 85%);
+  text-align: center;
+}
+
+.compare__head small {
+  color: var(--text-muted);
+}
+
+.compare__img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.3));
+}
+
+.compare__types {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.compare__table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.compare__table td,
+.compare__table th {
+  padding: 0.55rem 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare__table th {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.compare__table td {
+  font-weight: 800;
+  font-size: 1.1rem;
+  width: 25%;
+}
+
+.compare__table td.win {
+  color: #1f9d55;
+}
+
+.compare__table td.win::after {
+  content: ' ▲';
+  font-size: 0.7rem;
+}
+
+.compare__table td.lose {
+  color: #d64545;
+  opacity: 0.8;
+}
+
+.compare__total td,
+.compare__total th {
+  border-bottom: 0;
+  border-top: 2px solid var(--border);
+}
+
+@media (max-width: 520px) {
+  .compare__img {
+    width: 90px;
+    height: 90px;
+  }
+  .compare {
+    padding: 1rem 0.6rem;
+  }
+}

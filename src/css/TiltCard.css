@@ -1,0 +1,169 @@
+.tilt-stage {
+  perspective: 1100px;
+  display: inline-block;
+}
+
+.tilt {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  --glare: 0;
+  --lift: 1;
+  position: relative;
+  border-radius: 4.5% / 3.2%;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--lift));
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+  will-change: transform;
+}
+
+.tilt[data-tilting='true'] {
+  transition: transform 0.08s linear, box-shadow 0.3s;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.55), 0 0 40px rgba(255, 255, 255, 0.18);
+}
+
+.tilt__content {
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+/* Brilho que segue o ponteiro */
+.tilt__glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.1) 38%,
+    transparent 60%
+  );
+  mix-blend-mode: soft-light;
+  opacity: var(--glare);
+  transition: opacity 0.3s;
+}
+
+/* Foil holográfico: faixas de cor deslizam conforme o mouse */
+.tilt__holo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 15%,
+    rgba(255, 60, 170, 0.5) 32%,
+    rgba(80, 255, 220, 0.5) 46%,
+    rgba(255, 235, 90, 0.5) 60%,
+    rgba(120, 130, 255, 0.5) 74%,
+    transparent 88%
+  );
+  background-size: 280% 280%;
+  background-position: var(--mx) var(--my);
+  mix-blend-mode: color-dodge;
+  opacity: calc(var(--glare) * 0.78);
+  transition: opacity 0.3s;
+}
+
+/* Em telas de toque não há "hover": a carta balança sozinha */
+@media (hover: none) {
+  .tilt {
+    animation: sway 6s ease-in-out infinite;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotateY(-9deg) rotateX(3deg);
+  }
+  50% {
+    transform: rotateY(9deg) rotateX(-3deg);
+  }
+}
+
+/* ---------- Modo "idle": a carta se anima sozinha ---------- */
+.tilt--idle:not([data-tilting='true']) {
+  animation: sway 7s ease-in-out infinite;
+}
+
+/* faixas holográficas deslizando */
+.tilt--idle:not([data-tilting='true']) .tilt__holo {
+  opacity: 0.55;
+  animation: holoSweep 6s ease-in-out infinite;
+}
+
+/* reflexo de luz cruzando a carta */
+.tilt--idle:not([data-tilting='true']) .tilt__glare {
+  opacity: 1;
+  background: linear-gradient(
+    112deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 62%
+  );
+  background-size: 260% 100%;
+  mix-blend-mode: soft-light;
+  animation: glareSweep 4.5s ease-in-out infinite;
+}
+
+@keyframes holoSweep {
+  0%,
+  100% {
+    background-position: 0% 10%;
+  }
+  50% {
+    background-position: 100% 90%;
+  }
+}
+
+@keyframes glareSweep {
+  0% {
+    background-position: 130% 0;
+  }
+  60%,
+  100% {
+    background-position: -30% 0;
+  }
+}
+
+/* Reflexo que atravessa a carta quando o cursor entra */
+.tilt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.65) 50%, transparent 60%);
+  background-size: 300% 100%;
+  background-position: 130% 0;
+  mix-blend-mode: overlay;
+  opacity: 0;
+}
+
+.tilt[data-tilting='true']::after {
+  animation: enterShine 0.9s ease-out 1;
+}
+
+@keyframes enterShine {
+  0% {
+    opacity: 1;
+    background-position: 130% 0;
+  }
+  100% {
+    opacity: 0;
+    background-position: -30% 0;
+  }
+}
+
+/* Só o movimento AUTOMÁTICO respeita "reduzir movimento" */
+@media (prefers-reduced-motion: reduce) {
+  .tilt--idle:not([data-tilting='true']),
+  .tilt--idle:not([data-tilting='true']) .tilt__holo,
+  .tilt--idle:not([data-tilting='true']) .tilt__glare {
+    animation: none;
+  }
+}

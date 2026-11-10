@@ -1,0 +1,55 @@
+.stat {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.2rem 0.5rem;
+  font-size: 0.9rem;
+}
+
+.stat__label {
+  font-weight: 600;
+}
+
+.stat__value {
+  font-weight: 800;
+}
+
+.stat__track {
+  grid-column: 1 / -1;
+  height: 10px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.stat__fill {
+  position: relative;
+  height: 100%;
+  border-radius: 999px;
+  animation: grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  transform-origin: left;
+  overflow: hidden;
+  box-shadow: 0 0 10px -2px currentColor;
+}
+
+/* Reflexo que passa pela barra */
+.stat__fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: statShine 2.8s ease-in-out 1s infinite;
+}
+
+@keyframes statShine {
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}

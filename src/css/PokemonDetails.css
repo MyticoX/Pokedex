@@ -1,0 +1,326 @@
+.details {
+  display: flex;
+  flex-direction: column;
+  perspective: 1400px;
+}
+
+/* ---------- Abas ---------- */
+.details__tabs {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.8rem 3.5rem 0.8rem 1rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.details__tabs button {
+  border: 0;
+  background: transparent;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+.details__tabs button:hover {
+  transform: translateY(-2px);
+}
+
+.details__tabs button.is-active {
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 16px -4px var(--c1);
+}
+
+/* Efeito de "virar a página" ao trocar de aba / Pokémon */
+.details__flip {
+  transform-origin: center top;
+  animation: flipIn 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+@keyframes flipIn {
+  from {
+    opacity: 0;
+    transform: rotateY(-80deg) scale(0.95);
+  }
+}
+
+/* ---------- Aba de atributos ---------- */
+.details__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+}
+
+.details__hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  min-height: 430px;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.4), transparent 58%),
+    radial-gradient(circle at 12% 100%, rgba(0, 0, 0, 0.35), transparent 55%),
+    linear-gradient(160deg, var(--c1), var(--c2));
+  background-size: 100% 100%, 100% 100%, 160% 160%;
+  animation: aurora 12s ease-in-out infinite alternate;
+}
+
+@keyframes aurora {
+  from {
+    background-position: 0 0, 0 0, 0% 0%;
+  }
+  to {
+    background-position: 0 0, 0 0, 100% 100%;
+  }
+}
+
+.details__id {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 3;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+}
+
+/* Anel giratório atrás do Pokémon */
+.details__ring {
+  position: absolute;
+  z-index: 1;
+  width: 74%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0.6),
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 55%,
+    transparent 80%,
+    rgba(255, 255, 255, 0.6)
+  );
+  -webkit-mask: radial-gradient(circle, transparent 58%, #000 60%, #000 66%, transparent 68%);
+  mask: radial-gradient(circle, transparent 58%, #000 60%, #000 66%, transparent 68%);
+  animation: ringSpin 9s linear infinite;
+}
+
+@keyframes ringSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modo 2D (imagem flutuando) */
+.details__img {
+  position: relative;
+  z-index: 2;
+  width: min(330px, 94%);
+  height: auto;
+  filter: drop-shadow(0 14px 10px rgba(0, 0, 0, 0.35));
+  animation: float 3.2s ease-in-out infinite;
+}
+
+.pokemon-img-fallback.details__img {
+  width: 180px;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.015, 1.03); /* "respira" ao subir */
+  }
+}
+
+/* Sombra no "chão" */
+.details__shadow {
+  position: absolute;
+  z-index: 1;
+  bottom: 9%;
+  width: 44%;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.38);
+  filter: blur(8px);
+  animation: shadow 3.2s ease-in-out infinite;
+}
+
+@keyframes shadow {
+  50% {
+    transform: scale(0.82);
+    opacity: 0.6;
+  }
+}
+
+.details__modes {
+  position: absolute;
+  z-index: 4;
+  top: 0.8rem;
+  right: 0.8rem;
+  display: flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.details__modes button {
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.details__modes button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.details__modes button.is-active {
+  background: #fff;
+  color: #222;
+}
+
+/* Animação 2D (GIF): ampliado em escala inteira (inline) para os pixels ficarem nítidos */
+.details__img--anim {
+  position: relative;
+  z-index: 2;
+  max-width: none;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.4));
+  animation: none;
+}
+
+.details__info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.details__title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.details__title h2 {
+  font-size: 1.8rem;
+}
+
+.details__legend {
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #4a3500;
+  background: linear-gradient(120deg, #ffe27a, #ffb703, #ffe27a);
+  background-size: 200% 100%;
+  animation: goldShine 3s linear infinite;
+  box-shadow: 0 0 14px rgba(255, 190, 0, 0.55);
+  white-space: nowrap;
+}
+
+@keyframes goldShine {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.details__fav {
+  background: none;
+  border: 0;
+  font-size: 1.5rem;
+  transition: transform 0.2s;
+}
+
+.details__fav:hover {
+  transform: scale(1.25) rotate(-12deg);
+}
+
+.details__types {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.details__stats {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.details__total {
+  text-align: right;
+  color: var(--text-muted);
+}
+
+.details__trainers h4 {
+  margin-bottom: 0.2rem;
+}
+
+.details__trainers p {
+  color: var(--text-muted);
+}
+
+/* ---------- Aba da carta ---------- */
+.details__card-tab {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--c1) 45%, transparent), transparent 65%),
+    radial-gradient(circle at 15% 90%, color-mix(in srgb, var(--c2) 35%, transparent), transparent 55%);
+}
+
+.details__card-title {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-top: 1.2rem;
+}
+
+.details__card-tab .cardv {
+  position: relative;
+  z-index: 1;
+}
+
+.details__card-title small {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- Navegação ---------- */
+.details__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem 1.1rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 640px) {
+  .details__grid {
+    grid-template-columns: 1fr;
+  }
+  .details__hero {
+    min-height: 340px;
+  }
+  .details__img {
+    width: 200px;
+  }
+}
